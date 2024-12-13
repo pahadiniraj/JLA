@@ -51,7 +51,10 @@ export const POST = async (req: Request) => {
     }
 
     const res = new NextResponse(
-      JSON.stringify({ message: "User is Created", user: createdUser }),
+      JSON.stringify({
+        message: `${createdUser.fullname}, a verification code has been sent to your email. Please enter the code provided and complete the registration process. `,
+        user: createdUser,
+      }),
       { status: 200 }
     );
 
