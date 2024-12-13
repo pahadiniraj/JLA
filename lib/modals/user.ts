@@ -50,25 +50,36 @@ const UserSchema: Schema = new Schema(
 );
 
 UserSchema.pre("save", async function (this: IUser, next) {
-  if (this.password && !this.isModified("password")) {
-    return next();
-  }
+  try {
+    console.log("Inside pre-save hook");
+    if (this.password && !this.isModified("password")) {
+      console.log("Password is not modified");
+      return next();
+    }
 
-  if (this.password) {
-    const salt = await bcrypt.genSalt(10);
-    this.password = await bcrypt.hash(this.password, salt);
+    if (this.password) {
+      console.log("Hashing password");
+      const salt = await bcrypt.genSalt(10);
+      this.password = await bcrypt.hash(this.password, salt);
+      console.log("Hashed password:", this.password);
+    }
+    next();
+  } catch (error: any) {
+    console.error("Error in pre-save hook:", error.message);
+    next(error);
   }
-  next();
 });
 
 UserSchema.methods.comparePassword = async function (
-  this: IUser,
   candidatePassword: string
 ) {
-  if (this.password) {
-    return bcrypt.compare(candidatePassword, this.password);
+  if (!this.password) {
+    console.error("Password is not set for this user.");
+    return false;
   }
-  return false;
+  const isMatch = await bcrypt.compare(candidatePassword, this.password);
+  console.log("Password validation result:", isMatch);
+  return isMatch;
 };
 
 const User = models.User || model<IUser>("User", UserSchema);

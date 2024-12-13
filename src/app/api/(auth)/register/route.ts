@@ -44,8 +44,8 @@ export const POST = async (req: Request) => {
     }
     const newUser = new User({ fullname, email, password });
     await newUser.save();
-    GenerateOtpAndSendMail(newUser);
-    const createdUser = await User.findById(newUser.id).select("-password");
+    await GenerateOtpAndSendMail(newUser);
+    const createdUser = await User.findById(newUser.id);
     if (!createdUser) {
       throw new Error("Somthing went wrong while registering user");
     }
@@ -68,6 +68,7 @@ export const POST = async (req: Request) => {
 
     return res;
   } catch (error: any) {
+    console.error("Error caught:", error.message);
     return new NextResponse(JSON.stringify({ error: error.message }), {
       status: 500,
     });
