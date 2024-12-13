@@ -1,0 +1,72 @@
+import { NextResponse } from "next/server";
+import { connect } from "../../../../../lib/db";
+import User from "../../../../../lib/modals/user";
+import { userRegistrationSchema } from "../../../../../utils/Validation/userSchema";
+import GenerateOtpAndSendMail from "../../../../../utils/Email/GenerateOTP";
+
+export const GET = async () => {
+  try {
+    await connect();
+    const users = await User.find();
+    return new NextResponse(JSON.stringify(users));
+  } catch (error: any) {
+    return new NextResponse(JSON.stringify({ error: error.message }), {
+      status: 500,
+    });
+  }
+};
+
+export const POST = async (req: Request) => {
+  try {
+    const { fullname, email, password } = await req.json();
+    const { error } = userRegistrationSchema.validate({
+      fullname,
+      email,
+      password,
+    });
+    if (error) {
+      return new NextResponse(
+        JSON.stringify({ error: error.details[0].message }),
+        {
+          status: 400,
+        }
+      );
+    }
+    await connect();
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return new NextResponse(
+        JSON.stringify({ error: "Email already exists" }),
+        {
+          status: 400,
+        }
+      );
+    }
+    const newUser = new User({ fullname, email, password });
+    await newUser.save();
+    GenerateOtpAndSendMail(newUser);
+    const createdUser = await User.findById(newUser.id).select("-password");
+    if (!createdUser) {
+      throw new Error("Somthing went wrong while registering user");
+    }
+
+    const res = new NextResponse(
+      JSON.stringify({ message: "User is Created", user: createdUser }),
+      { status: 200 }
+    );
+
+    res.cookies.set("email", createdUser.email, {
+      httpOnly: true,
+      maxAge: 15 * 60 * 1000,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "none",
+      path: "/",
+    });
+
+    return res;
+  } catch (error: any) {
+    return new NextResponse(JSON.stringify({ error: error.message }), {
+      status: 500,
+    });
+  }
+};
