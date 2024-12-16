@@ -3,15 +3,15 @@ import { NextResponse } from "next/server";
 export const setTokenCookies = (
   res: NextResponse,
   accessToken: string,
-  newAccessTokenExp: number,
+  accessTokenExp: number,
   refreshToken: string,
   newRefreshTokenExp: number
 ): NextResponse => {
   console.log("setting access and ref token in cookie");
-  console.log("accesstoken in cookie", accessToken);
+  console.log("accesstoken in cookie", accessTokenExp);
 
   const accessTokenMaxAge =
-    (newAccessTokenExp - Math.floor(Date.now() / 1000)) * 1000;
+    (accessTokenExp - Math.floor(Date.now() / 1000)) * 1000;
   const refreshTokenMaxAge =
     (newRefreshTokenExp - Math.floor(Date.now() / 1000)) * 1000;
 
@@ -22,17 +22,17 @@ export const setTokenCookies = (
   // Set cookie for access token
   res.cookies.set("accessToken", accessToken, {
     httpOnly: true,
-    secure: false,
+    secure: true,
     maxAge: accessTokenMaxAge,
-    sameSite: "lax",
+    sameSite: "none",
   });
 
   // Set cookie for refresh token
   res.cookies.set("refreshToken", refreshToken, {
     httpOnly: true,
-    secure: false,
+    secure: true,
     maxAge: refreshTokenMaxAge,
-    sameSite: "lax",
+    sameSite: "none",
   });
 
   // Return the response
