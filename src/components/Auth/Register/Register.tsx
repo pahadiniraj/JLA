@@ -12,7 +12,7 @@ const Register: React.FC = () => {
 
   return (
     <>
-      <div className=" w-full flex  bg-blue-800 md:bg-transparent h-full ">
+      <div className=" w-full flex  md:justify-center md:items-center  bg-blue-800 md:bg-transparent h-full ">
         <div className=" inset-0 md:w-2/6 mt-10 md:bg-blue-800 rounded-2xl   z-10 bg-opacity-30 backdrop-blur-sm  ">
           <div className=" p-4  rounded-xl max-h-[90vh] overflow-y-auto  relative ">
             <div className="flex justify-center flex-col items-center w-full   mb-2">

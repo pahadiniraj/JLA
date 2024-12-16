@@ -57,7 +57,7 @@ const Navbar = () => {
                       onClick={() => {
                         if (close) close();
                       }}
-                      className={`flex justify-start p-2 rounded-md font-semibold duration-300  w-full ${
+                      className={`flex justify-start p-2 rounded-md font-semibold duration-300   w-full ${
                         isActive(item.href)
                           ? "bg-slate-200 text-blue-700 "
                           : "hover:bg-slate-200 hover:text-blue-700"
@@ -94,22 +94,22 @@ const Navbar = () => {
 
         <div className="hidden md:block">
           <div className="flex justify-center items-center gap-5 ">
-            {link.map((item, index) => (
-              <Link
-                key={index}
-                href={item.href}
-                onClick={() => {
-                  if (close) close();
-                }}
-                className={`flex justify-start p-2 rounded-md font-semibold duration-300 ${
-                  isActive(item.href)
-                    ? "bg-gradient-to-r from-indigo-800 to-indigo-800  "
-                    : "hover:bg-gradient-to-r from-indigo-800 to-indigo-800 hover:text-white"
-                }`}
-              >
-                {item.label}
-              </Link>
-            ))}
+            <div className="flex flex-col justify-center items-center gap-3">
+              {link.map((item, index) => (
+                <Link
+                  key={index}
+                  href={item.href}
+                  onClick={() => {
+                    if (close) close();
+                  }}
+                  className={`flex justify-start p-2 rounded-md font-semibold duration-300 text-white  ${
+                    isActive(item.href) ? "bg-blue-700 " : "bg-blue-600"
+                  }`}
+                >
+                  {item.label}
+                </Link>
+              ))}
+            </div>
             <ul className="text-base font-bold">
               <li>
                 <p>Contact US</p>

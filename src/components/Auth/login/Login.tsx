@@ -11,7 +11,7 @@ const Login: React.FC = () => {
 
   return (
     <>
-      <div className=" w-full flex   bg-blue-800 md:bg-transparent h-full ">
+      <div className=" w-full flex md:justify-center md:items-center h-full   bg-blue-800 md:bg-transparent  ">
         <div className=" mt-10 inset-0 md:w-2/6  md:bg-blue-800 rounded-2xl   z-10 bg-opacity-30 backdrop-blur-sm   ">
           <div className="p-4 rounded-xl md:max-h-[90vh] overflow-y-auto relative">
             <div className="flex justify-center w-full  ">
