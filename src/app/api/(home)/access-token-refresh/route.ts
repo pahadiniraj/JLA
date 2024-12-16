@@ -1,12 +1,12 @@
 import { NextResponse } from "next/server";
-import { connect } from "../../../../../lib/db";
-import { setTokenCookies } from "../../../../../utils/Tokens/setTokenCookies";
+import { connect } from "../../../../lib/db";
+import { setTokenCookies } from "../../../../utils/Tokens/setTokenCookies";
 import jwt from "jsonwebtoken";
 import { parse } from "cookie";
-import { IsTokenExpired } from "../../../../../utils/Tokens/isTokenExpired";
-import { VerifyRefreshToken } from "../../../../../utils/Tokens/verifyRefreshToken";
-import User from "../../../../../lib/modals/user";
-import UserRefreshToken from "../../../../../lib/modals/userRefreshToken";
+import { IsTokenExpired } from "../../../../utils/Tokens/isTokenExpired";
+import { VerifyRefreshToken } from "../../../../utils/Tokens/verifyRefreshToken";
+import User from "../../../../lib/modals/user";
+import UserRefreshToken from "../../../../lib/modals/userRefreshToken";
 
 export const POST = async (req: Request) => {
   try {

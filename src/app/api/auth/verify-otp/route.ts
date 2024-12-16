@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
 import { parse } from "cookie";
-import User from "../../../../../lib/modals/user";
-import EmailVerification from "../../../../../lib/modals/emailVerification";
-import GenerateOtpAndSendMail from "../../../../../utils/Email/GenerateOTP";
+import User from "../../../../lib/modals/user";
+import EmailVerification from "../../../../lib/modals/emailVerification";
+import GenerateOtpAndSendMail from "../../../../utils/Email/GenerateOTP";
 
 export const POST = async (req: Request) => {
   try {

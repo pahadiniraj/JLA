@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
-import { connect } from "../../../../../lib/db";
-import User from "../../../../../lib/modals/user";
-import { userRegistrationSchema } from "../../../../../utils/Validation/userSchema";
-import GenerateOtpAndSendMail from "../../../../../utils/Email/GenerateOTP";
+import { connect } from "../../../../lib/db";
+import User from "../../../../lib/modals/user";
+import { userRegistrationSchema } from "../../../../utils/Validation/JOI/userSchema";
+import GenerateOtpAndSendMail from "../../../../utils/Email/GenerateOTP";
 
 export const GET = async () => {
   try {
