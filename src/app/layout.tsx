@@ -5,7 +5,6 @@ import { Provider } from "react-redux";
 import { store } from "@/Redux/Store";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Navbar from "@/components/Navbar/Navbar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,10 +28,7 @@ export default function RootLayout({
       >
         <Provider store={store}>
           <ToastContainer />
-          <div className=" h-screen">
-            <Navbar />
-            {children}
-          </div>
+          <div className=" h-screen">{children}</div>
         </Provider>
       </body>
     </html>
