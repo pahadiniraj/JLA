@@ -2,9 +2,7 @@ import { FetchBaseQueryError } from "@reduxjs/toolkit/query/react";
 import { SerializedError } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 export interface ErrorDetail {
-  code: string;
-  message: string;
-  path: string[];
+  error: string;
 }
 
 // Interface for error response data
@@ -32,8 +30,8 @@ export const handleError = (
     const errorData = error as ErrorResponseData | undefined;
 
     if (errorData) {
-      if (errorData.data?.message) {
-        errorMessage = errorData.data?.message;
+      if (errorData.data?.error) {
+        errorMessage = errorData.data?.error;
       } else {
         errorMessage = "An error occurred";
       }
