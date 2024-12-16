@@ -1,12 +1,15 @@
 import { NextResponse } from "next/server";
 
-const setTokenCookies = (
+export const setTokenCookies = (
   res: NextResponse,
   accessToken: string,
   newAccessTokenExp: number,
   refreshToken: string,
   newRefreshTokenExp: number
-): void => {
+): NextResponse => {
+  console.log("setting access and ref token in cookie");
+  console.log("accesstoken in cookie", accessToken);
+
   const accessTokenMaxAge =
     (newAccessTokenExp - Math.floor(Date.now() / 1000)) * 1000;
   const refreshTokenMaxAge =
@@ -16,21 +19,22 @@ const setTokenCookies = (
     throw new Error("Token expiration time is invalid");
   }
 
-  // set cookie for access token
-
+  // Set cookie for access token
   res.cookies.set("accessToken", accessToken, {
     httpOnly: true,
-    secure: true,
+    secure: false,
     maxAge: accessTokenMaxAge,
-    sameSite: "none",
+    sameSite: "lax",
   });
 
+  // Set cookie for refresh token
   res.cookies.set("refreshToken", refreshToken, {
     httpOnly: true,
-    secure: true,
+    secure: false,
     maxAge: refreshTokenMaxAge,
-    sameSite: "none",
+    sameSite: "lax",
   });
-};
 
-export default setTokenCookies;
+  // Return the response
+  return res;
+};

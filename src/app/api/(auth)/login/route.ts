@@ -1,9 +1,9 @@
 import { NextResponse } from "next/server";
 import User from "../../../../../lib/modals/user";
 import GenerateOtpAndSendMail from "../../../../../utils/Email/GenerateOTP";
-import setTokenCookies from "../../../../../utils/Tokens/setTokenCookies";
 import { GenerateAccessAndRefreshToken } from "../../../../../utils/Tokens/generateAccessAndRefreshToken";
 import { connect } from "../../../../../lib/db";
+import { setTokenCookies } from "../../../../../utils/Tokens/setTokenCookies";
 
 export const POST = async (req: Request) => {
   try {
