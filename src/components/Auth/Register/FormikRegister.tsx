@@ -69,7 +69,7 @@ const FormikRegister = () => {
                   <Field
                     type="text"
                     name="fullname"
-                    className="p-3 bg-black border border-gray-600 rounded-md w-full text-white placeholder-gray-400 focus:outline-none focus:border-blue-500 transition-all duration-300"
+                    className="p-3 bg-white border border-gray-600 rounded-md w-full text-black placeholder-gray-400 focus:outline-none focus:border-blue-500 transition-all duration-300"
                     placeholder="Full Name"
                     autoComplete="name"
                   />
@@ -84,7 +84,7 @@ const FormikRegister = () => {
                 <Field
                   type="email"
                   name="email"
-                  className="p-3 bg-black border border-gray-600 rounded-md w-full text-white placeholder-gray-400 focus:outline-none focus:border-blue-500 transition-all duration-300"
+                  className="p-3 bg-white border border-gray-600 rounded-md w-full text-black placeholder-gray-400 focus:outline-none focus:border-blue-500 transition-all duration-300"
                   placeholder="Email"
                   autoComplete="email"
                 />
@@ -98,7 +98,7 @@ const FormikRegister = () => {
                 <Field
                   type={showPassword ? "password" : "text"}
                   name="password"
-                  className="p-3 bg-black border border-gray-600 rounded-md w-full text-white placeholder-gray-400 focus:outline-none focus:border-blue-500 transition-all duration-300"
+                  className="p-3 bg-white border border-gray-600 rounded-md w-full text-black placeholder-gray-400 focus:outline-none focus:border-blue-500 transition-all duration-300"
                   placeholder="Password"
                   autoComplete="new-password"
                 />
@@ -110,7 +110,7 @@ const FormikRegister = () => {
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-2 top-4 transition duration-300 ease-linear active:scale-90"
+                  className="absolute right-2 top-4 transition duration-300 ease-linear active:scale-90 text-black"
                 >
                   {showPassword ? <FaEye /> : <FaEyeSlash />}
                 </button>
@@ -119,7 +119,7 @@ const FormikRegister = () => {
                 <Field
                   type={showConfirmPassword ? "password" : "text"}
                   name="confirmPassword"
-                  className="p-3 bg-black border border-gray-600 rounded-md w-full text-white placeholder-gray-400 focus:outline-none focus:border-blue-500 transition-all duration-300"
+                  className="p-3 bg-white border border-gray-600 rounded-md w-full text-black placeholder-gray-400 focus:outline-none focus:border-blue-500 transition-all duration-300"
                   placeholder="Confirm Password"
                   autoComplete="new-password"
                 />
@@ -131,7 +131,7 @@ const FormikRegister = () => {
                 <button
                   type="button"
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                  className="absolute right-2 top-4  transition duration-300 ease-linear active:scale-90"
+                  className="absolute right-2 top-4  transition duration-300 ease-linear active:scale-90 text-black"
                 >
                   {showConfirmPassword ? <FaEye /> : <FaEyeSlash />}
                 </button>
@@ -144,7 +144,7 @@ const FormikRegister = () => {
                     className="w-3 h-3 text-blue-500 focus:ring-blue-500 border-gray-600 rounded"
                     id="acceptTermAndCondition"
                   />
-                  <label htmlFor="acceptTermAndCondition" className="text-sm">
+                  <label htmlFor="acceptTermAndCondition" className="text-base">
                     I accept the terms and conditions
                   </label>
                 </div>

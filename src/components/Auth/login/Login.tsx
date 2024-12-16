@@ -25,17 +25,18 @@ const Login: React.FC = () => {
                   />
                 </div>
                 <p className="text-center text-base ">
-                  Welcome to JOB FINDER Sign up to stay updated with my latest
-                  projects. Fill in your details and join the creative journey!
+                  Welcome to Job Finder! Login to stay updated with the latest
+                  job opportunities and retrieve your saved data. Fill in your
+                  details and take the next step in your career journey!
                 </p>
               </div>
             </div>
             <div className="w-full">{<FormikLogin />}</div>
 
             <div className="text-center mt-4 flex justify-center gap-1  text-xs">
-              <p className="font-light">Not yet Registered ? </p>
+              <p className="font-light text-base">Not yet Registered ? </p>
               <button
-                className="hover:text-purple-500 font-bold transition-colors duration-300"
+                className="hover:text-purple-500 font-bold transition-colors duration-300 text-base"
                 onClick={() => router.push("/register")}
               >
                 Register

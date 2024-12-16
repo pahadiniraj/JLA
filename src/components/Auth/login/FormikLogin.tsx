@@ -68,7 +68,7 @@ const FormikLogin = () => {
                 <Field
                   type="email"
                   name="email"
-                  className="p-3 bg-black border border-gray-600 rounded-md w-full text-white placeholder-gray-400 focus:outline-none focus:border-blue-500 transition-all duration-300"
+                  className="p-3 bg-white border border-gray-600 rounded-md w-full text-black placeholder-gray-400 focus:outline-none focus:border-blue-500 transition-all duration-300"
                   placeholder="Email"
                   autoComplete="email"
                 />
@@ -82,7 +82,7 @@ const FormikLogin = () => {
                 <Field
                   type={showPassword ? "password" : "text"}
                   name="password"
-                  className="p-3 bg-black border border-gray-600 rounded-md w-full text-white placeholder-gray-400 focus:outline-none focus:border-blue-500 transition-all duration-300"
+                  className="p-3 bg-white border border-gray-600 rounded-md w-full text-black placeholder-gray-400 focus:outline-none focus:border-blue-500 transition-all duration-300"
                   placeholder="Password"
                   autoComplete="new-password"
                 />
@@ -94,7 +94,7 @@ const FormikLogin = () => {
                 <button
                   type="button"
                   onClick={togglePasswordVisibility}
-                  className="absolute right-2 top-4 text-xl transition duration-300 ease-linear active:scale-90"
+                  className="absolute right-2 top-4 text-xl transition duration-300 ease-linear active:scale-90 text-black"
                 >
                   {showPassword ? <FaEye /> : <FaEyeSlash />}
                 </button>
@@ -108,7 +108,7 @@ const FormikLogin = () => {
                     className="w-3 h-3 text-blue-500 focus:ring-blue-500 border-gray-600 rounded"
                     id="acceptTermAndCondition"
                   />
-                  <label htmlFor="acceptTermAndCondition" className="text-sm">
+                  <label htmlFor="acceptTermAndCondition" className="text-base">
                     I accept the{" "}
                     <span
                       onClick={() => router.push("/term-condition")}
@@ -127,7 +127,7 @@ const FormikLogin = () => {
               <div className=" w-full flex  justify-end items-end">
                 <Link
                   href="/reset-password-link"
-                  className="text-xs hover:text-purple-500 font-bold transition-colors duration-300"
+                  className="text-sm hover:text-purple-500 font-bold transition-colors duration-300"
                 >
                   Forget Password?
                 </Link>
