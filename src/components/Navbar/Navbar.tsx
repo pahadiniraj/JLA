@@ -94,7 +94,7 @@ const Navbar = () => {
 
         <div className="hidden md:block">
           <div className="flex justify-center items-center gap-5 ">
-            <div className="flex flex-col justify-center items-center gap-3">
+            <div className="flex  justify-center items-center gap-2  border-r-2 border-black pr-4">
               {link.map((item, index) => (
                 <Link
                   key={index}
@@ -102,11 +102,16 @@ const Navbar = () => {
                   onClick={() => {
                     if (close) close();
                   }}
-                  className={`flex justify-start p-2 rounded-md font-semibold duration-300 text-white  ${
-                    isActive(item.href) ? "bg-blue-700 " : "bg-blue-600"
+                  className={`flex justify-start p-2 rounded-md font-semibold duration-300 text-white w-full text-center ${
+                    isActive(item.href)
+                      ? "bg-blue-700 "
+                      : "bg-blue-600 hover:bg-blue-700 text-center"
                   }`}
                 >
-                  {item.label}
+                  <p className="text-center flex justify-center items-center ">
+                    {" "}
+                    {item.label}
+                  </p>
                 </Link>
               ))}
             </div>
