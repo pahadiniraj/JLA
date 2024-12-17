@@ -4,7 +4,7 @@ import { FaSearch } from "react-icons/fa";
 const HeroSection = () => {
   return (
     <>
-      <div className="bg-blue-600  h-[200px] flex justify-center items-center flex-col gap-4">
+      <div className="bg-blue-600 mt-32 h-[200px] flex justify-center items-center flex-col gap-4">
         <h1 className="md:text-3xl text-white text-lg font-bold  text-center">
           FIND YOUR DREAM JOB WITH JOB FINDER
         </h1>

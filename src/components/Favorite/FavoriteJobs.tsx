@@ -1,40 +1,20 @@
 "use client";
 import Image from "next/image";
-import React, { useState } from "react";
 import LOGO from "../../../public/Logo/LOGO.png";
 import { MdLocationPin } from "react-icons/md";
 import { GiMoneyStack } from "react-icons/gi";
-import { FaHeart } from "react-icons/fa";
 
-const JobLists = () => {
-  const [loveClicked, setLoveClicked] = useState(false);
-
-  const handleLoveClick = () => {
-    setLoveClicked(!loveClicked);
-  };
-
+const FavoriteJobs = () => {
   return (
     <>
-      <div className="md:m-10 ">
+      <div className=" mt-36 mx-5 ">
         <h1 className="text-2xl m-4 md:m-0 ">
-          <span className="border-b-2 pb-1  border-blue-600">Jobs</span> In
-          Nepal
+          <span className="border-b-2 pb-1  border-blue-600">Favorite</span>{" "}
+          List of jobs
         </h1>
         <div className="flex gap-4">
           <div className="border-2 rounded-md bg-slate-200/90 shadow-lg backdrop-blur-3xl h-[500px] my-5 grid lg:grid-cols-3 sm:grid-cols-2 md:grid-cols-2   p-4 gap-4">
             <div className="border border-slate-600/40  rounded-lg bg-white shadow-lg backdrop-blur-3xl h-[200px] p-2 relative">
-              <div className="absolute right-1">
-                <button
-                  className={` border border-slate-400 w-8 h-8 flex justify-center items-center rounded-full mt-2 mx-2  absolute  right-1   ${
-                    loveClicked ? "bg-slate-100 text-red-600" : ""
-                  } `}
-                >
-                  <FaHeart
-                    className={`text-xl  cursor-pointer  `}
-                    onClick={handleLoveClick}
-                  />
-                </button>
-              </div>
               <div className="flex gap-4">
                 <div className="border-slate-400/40  w-[100px]  p-1 flex justify-center items-center rounded-lg shadow-lg bg-slate-500/30">
                   <Image
@@ -78,4 +58,4 @@ const JobLists = () => {
   );
 };
 
-export default JobLists;
+export default FavoriteJobs;

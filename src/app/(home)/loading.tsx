@@ -9,7 +9,7 @@ const loading = () => {
   };
 
   return (
-    <div className=" mt-4 absolute right-6">
+    <div className=" w-full h-screen flex justify-center items-center">
       <ClipLoader
         color={"black"}
         loading={true}

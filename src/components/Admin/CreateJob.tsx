@@ -2,6 +2,8 @@
 import { ErrorMessage, Field, Form, Formik, FieldArray } from "formik";
 import { MdDelete, MdLibraryAdd } from "react-icons/md";
 import { jobValidationSchema } from "@/utils/Validation/JOI/createJobSchema";
+import { IoMdArrowRoundBack } from "react-icons/io";
+import { useRouter } from "next/navigation";
 
 interface CreateJobFormValues {
   title: string;
@@ -28,8 +30,17 @@ const CreateJob = () => {
     console.log(values);
   };
 
+  const router = useRouter();
+
   return (
-    <div className="w-full  p-6">
+    <div className="w-full mt-32  p-6">
+      <button
+        className="flex justify-center items-center gap-1 my-2 hover:text-blue-500 duration-200"
+        onClick={() => router.push("/")}
+      >
+        <IoMdArrowRoundBack />
+        back
+      </button>
       <h2 className="text-2xl font-bold text-gray-700 mb-4">Create New Job</h2>
       <Formik
         initialValues={initialValues}
@@ -135,15 +146,16 @@ const CreateJob = () => {
                           <div key={index} className="flex space-x-2 mb-2">
                             <Field
                               name={`description[${index}]`}
+                              as="textarea"
                               className="w-full p-2 border border-gray-300 rounded-md"
                               placeholder="Add a description"
                             />
                             <button
                               type="button"
                               onClick={() => arrayHelpers.remove(index)}
-                              className="text-red-500"
+                              className="text-red-500 hover:text-red-600"
                             >
-                              <MdDelete />
+                              <MdDelete className="text-xl" />
                             </button>
                             <ErrorMessage
                               name={`description[${index}]`}
@@ -205,6 +217,7 @@ const CreateJob = () => {
                         (_: any, index: any) => (
                           <div key={index} className="flex space-x-2 mb-2">
                             <Field
+                              as="textarea"
                               name={`jobSpecification[${index}]`}
                               className="w-full p-2 border border-gray-300 rounded-md"
                               placeholder="Add a specification"
@@ -212,7 +225,7 @@ const CreateJob = () => {
                             <button
                               type="button"
                               onClick={() => arrayHelpers.remove(index)}
-                              className="text-red-500 hover:text-red-700"
+                              className="text-red-500 hover:text-red-600"
                             >
                               <MdDelete size={20} />
                             </button>
