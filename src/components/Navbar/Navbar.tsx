@@ -29,7 +29,7 @@ const Navbar = () => {
   ];
 
   return (
-    <div className="flex justify-center items-center">
+    <div className="flex justify-center items-center z-20">
       <div className="bg-white/10 backdrop-blur-3xl border border-slate-200 rounded-lg shadow-lg justify-between items-center w-full flex md:mx-5  md:my-4  pr-4">
         <Image src={LOGO} alt="JOB FINDER" className="w-[200px]" priority />
         <button onClick={toggleNav}>
@@ -42,7 +42,7 @@ const Navbar = () => {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "spring", stiffness: 250 }}
-              className="fixed inset-0 bg-blue-600 opacity-98 text-white p-4 md:hidden h-screen text-3xl"
+              className="fixed w-full inset-0 bg-blue-600 opacity-98 text-white p-4 md:hidden h-screen text-3xl z-20"
             >
               <button className="text-end w-full mb-2" onClick={toggleNav}>
                 x

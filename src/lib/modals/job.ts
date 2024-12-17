@@ -23,7 +23,7 @@ const JobSchema: Schema = new Schema(
       required: true,
     },
     description: {
-      type: String,
+      type: [String],
       required: true,
     },
     company: {
@@ -39,7 +39,7 @@ const JobSchema: Schema = new Schema(
       required: true,
     },
     jobSpecification: {
-      type: String,
+      type: [String],
       required: true,
     },
     createdBy: {

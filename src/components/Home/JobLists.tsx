@@ -16,11 +16,11 @@ const JobLists = () => {
   return (
     <>
       <div className="md:m-10 ">
-        <h1 className="text-2xl">
+        <h1 className="text-2xl m-4 md:m-0 ">
           <span className="border-b-2 pb-1  border-blue-600">Jobs</span> In
           Nepal
         </h1>
-        <div className="border-2 rounded-md bg-slate-200/90 shadow-lg backdrop-blur-3xl h-[500px] my-5 grid grid-cols-3 p-4 gap-4">
+        <div className="border-2 rounded-md bg-slate-200/90 shadow-lg backdrop-blur-3xl h-[500px] my-5 grid md:grid-cols-3  p-4 gap-4">
           <div className="border border-slate-600/40  rounded-lg bg-white shadow-lg backdrop-blur-3xl h-[200px] p-2 relative">
             <div className="absolute right-1">
               <button
