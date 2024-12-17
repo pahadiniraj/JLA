@@ -35,7 +35,6 @@ const Navbar = () => {
         <button onClick={toggleNav}>
           <TiThMenu className="text-3xl md:hidden" />
         </button>
-
         <AnimatePresence>
           {showNav && (
             <motion.div
@@ -91,7 +90,6 @@ const Navbar = () => {
             </motion.div>
           )}
         </AnimatePresence>
-
         <div className="hidden md:block">
           <div className="flex justify-center items-center gap-5 ">
             <div className="flex  justify-center items-center gap-2  border-r-2 border-black pr-4">

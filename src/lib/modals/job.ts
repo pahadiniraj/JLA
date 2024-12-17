@@ -1,11 +1,13 @@
-import mongoose, { Schema, Document } from "mongoose";
+import { Schema, Document, models, model } from "mongoose";
 
 interface IJob extends Document {
   title: string;
   description: string;
   company: string;
   location: string;
-  createdBy: mongoose.Schema.Types.ObjectId; // Reference to User who created the job
+  companyImg: string;
+  jobSpecification: string;
+  createdBy?: Schema.Types.ObjectId; // Optional field
   createdAt: Date;
   updatedAt: Date;
 }
@@ -14,6 +16,10 @@ const JobSchema: Schema = new Schema(
   {
     title: {
       type: String,
+      required: true,
+    },
+    salary: {
+      type: Number,
       required: true,
     },
     description: {
@@ -28,10 +34,18 @@ const JobSchema: Schema = new Schema(
       type: String,
       required: true,
     },
-    createdBy: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+    companyImg: {
+      type: String,
       required: true,
+    },
+    jobSpecification: {
+      type: String,
+      required: true,
+    },
+    createdBy: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      required: false, // Optional field
     },
   },
   {
@@ -39,4 +53,6 @@ const JobSchema: Schema = new Schema(
   }
 );
 
-export default mongoose.models.Job || mongoose.model<IJob>("Job", JobSchema);
+const Job = models.Job || model<IJob>("Job", JobSchema);
+
+export default Job;
