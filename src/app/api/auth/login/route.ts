@@ -4,11 +4,27 @@ import GenerateOtpAndSendMail from "../../../../utils/Email/GenerateOTP";
 import { GenerateAccessAndRefreshToken } from "../../../../utils/Tokens/generateAccessAndRefreshToken";
 import { connect } from "../../../../lib/db";
 import { setTokenCookies } from "../../../../utils/Tokens/setTokenCookies";
+import { userLoginSchema } from "@/utils/Validation/JOI/userSchema";
 
 export const POST = async (req: Request) => {
   try {
     const { email, password } = await req.json();
     await connect();
+
+    const { error } = userLoginSchema.validate({
+      email,
+      password,
+    });
+
+    if (error) {
+      return new NextResponse(
+        JSON.stringify({ error: error.details[0].message }),
+        {
+          status: 400,
+        }
+      );
+    }
+
     const user = await User.findOne({ email });
 
     if (!user) {
@@ -48,7 +64,7 @@ export const POST = async (req: Request) => {
 
     const res = new NextResponse(
       JSON.stringify({
-        success:true,
+        success: true,
         message: customMessage,
         user: user,
       }),
