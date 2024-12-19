@@ -1,14 +1,16 @@
 import { v2 as cloudinary, UploadApiOptions } from "cloudinary";
-import { NextResponse } from "next/server";
 
+// Configure Cloudinary
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME || "",
   api_key: process.env.CLOUDINARY_API_KEY || "",
   api_secret: process.env.CLOUDINARY_API_SECRET || "",
 });
 
+// Utility function to upload file to Cloudinary
 const uploadOnCloudinary = async (
   fileBuffer: Buffer,
+  fileType: "image" | "pdf",
   resize: boolean = false
 ): Promise<string> => {
   return new Promise((resolve, reject) => {
@@ -16,7 +18,7 @@ const uploadOnCloudinary = async (
       resource_type: "auto",
     };
 
-    if (resize) {
+    if (fileType === "image" && resize) {
       options.transformation = [
         {
           width: 1080,
@@ -31,26 +33,15 @@ const uploadOnCloudinary = async (
       (error, result) => {
         if (error) {
           console.error("Cloudinary upload error:", error.message);
-          return reject(
-            NextResponse.json(
-              { error: "Cloudinary upload error: " + error.message },
-              { status: 500 }
-            )
-          );
+          return reject(new Error("Cloudinary upload error: " + error.message));
         }
 
-        if (result && result.secure_url) {
-          console.log(
-            "File uploaded successfully to Cloudinary:",
-            result.secure_url
-          );
+        if (result?.secure_url) {
+          console.log("File uploaded successfully:", result.secure_url);
           resolve(result.secure_url);
         } else {
           reject(
-            NextResponse.json(
-              { error: "Unexpected error occurred during Cloudinary upload." },
-              { status: 500 }
-            )
+            new Error("Unexpected error occurred during Cloudinary upload.")
           );
         }
       }
@@ -61,39 +52,71 @@ const uploadOnCloudinary = async (
   });
 };
 
-// Delete file from Cloudinary by publicId
+// Utility function to delete a file from Cloudinary by publicId
 const deleteFromCloudinary = async (publicId: string): Promise<void> => {
   try {
     const result = await cloudinary.uploader.destroy(publicId);
 
-    if (result.result !== "ok") {
-      throw NextResponse.json(
-        { error: "Failed to delete file from Cloudinary" },
-        { status: 500 }
-      );
+    if (result.result === "not found") {
+      throw new Error("File not found in Cloudinary");
+    } else if (result.result !== "ok") {
+      throw new Error("Failed to delete file from Cloudinary");
     }
 
-    console.log("File deleted successfully from Cloudinary");
+    console.log("File deleted successfully from Cloudinary:", publicId);
   } catch (error: any) {
     console.error("Error deleting file from Cloudinary:", error.message);
-    throw NextResponse.json(
-      { error: "Error occurred while deleting file from Cloudinary" },
-      { status: 500 }
-    );
+    throw new Error("Error occurred while deleting file from Cloudinary");
   }
 };
 
+// Utility function to extract publicId from a Cloudinary URL
 const extractPublicIdFromUrl = (url: string): string | null => {
   try {
-    const segments = url.split("/");
-    const publicIdSegment = segments[segments.length - 1].split(".")[0];
+    const urlWithoutQuery = url.split("?")[0]; // Remove query parameters
+    const segments = urlWithoutQuery.split("/");
+    const publicIdWithExtension = segments[segments.length - 1];
+    const publicId = publicIdWithExtension.split(".")[0]; // Remove file extension
 
-    console.log("Extracted publicId:", publicIdSegment);
-    return publicIdSegment;
+    console.log("Extracted publicId:", publicId);
+    return publicId;
   } catch (error: any) {
     console.error("Error extracting publicId from URL:", error.message);
     return null;
   }
 };
 
-export { uploadOnCloudinary, deleteFromCloudinary, extractPublicIdFromUrl };
+// Example usage for images and PDFs
+const handleFileUpload = async (
+  fileBuffer: Buffer,
+  mimeType: string,
+  resize: boolean = false
+): Promise<string> => {
+  try {
+    const fileType = mimeType.startsWith("image/")
+      ? "image"
+      : mimeType === "application/pdf"
+      ? "pdf"
+      : null;
+
+    if (!fileType) {
+      throw new Error(
+        "Unsupported file type. Only images and PDFs are allowed."
+      );
+    }
+
+    const uploadedUrl = await uploadOnCloudinary(fileBuffer, fileType, resize);
+    console.log("Uploaded file URL:", uploadedUrl);
+    return uploadedUrl;
+  } catch (error: any) {
+    console.error("Error handling file upload:", error.message);
+    throw new Error("File upload failed: " + error.message);
+  }
+};
+
+export {
+  uploadOnCloudinary,
+  deleteFromCloudinary,
+  extractPublicIdFromUrl,
+  handleFileUpload,
+};

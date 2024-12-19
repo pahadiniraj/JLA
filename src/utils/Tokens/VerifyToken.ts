@@ -6,9 +6,15 @@ if (!SECRET_KEY) {
   throw new Error("ACCESS_TOKEN_SECRET is not defined.");
 }
 
+// Extend the JwtPayload interface
+interface CustomJwtPayload extends JwtPayload {
+  id: string;
+  role: string;
+}
+
 interface VerifyTokenResult {
   isValid: boolean;
-  user?: string | JwtPayload; // User is optional in error cases
+  user?: CustomJwtPayload; // Explicitly use the extended interface
   error?: string; // Error is optional in success cases
 }
 
@@ -24,7 +30,10 @@ export const verifyToken = async (req: Request): Promise<VerifyTokenResult> => {
       return { isValid: false, error: "Access token is missing." };
     }
 
-    const decoded = jwt.verify(accessToken, SECRET_KEY);
+    // Verify the token and type it as CustomJwtPayload
+    const decoded = jwt.verify(accessToken, SECRET_KEY) as CustomJwtPayload;
+
+    console.log("User data", decoded); // { id, role, exp, iat }
     return { isValid: true, user: decoded };
   } catch (error: any) {
     if (error.name === "TokenExpiredError") {

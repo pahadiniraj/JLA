@@ -47,6 +47,7 @@ export const AccessTokenAutoRefresh = async (req: Request) => {
         { status: 404 }
       );
     }
+
     const userRefToken = await UserRefreshToken.findOne({
       userId: user._id,
     });

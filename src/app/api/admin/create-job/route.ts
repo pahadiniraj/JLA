@@ -8,6 +8,8 @@ import { NextResponse } from "next/server";
 
 export const POST = async (req: Request) => {
   try {
+    await connect();
+
     const refresh = await AccessTokenAutoRefresh(req);
 
     if (refresh) {
@@ -75,9 +77,12 @@ export const POST = async (req: Request) => {
     }
 
     const fileBuffer = Buffer.from(await companyImg.arrayBuffer());
-    const uploadedImageUrl = await uploadOnCloudinary(fileBuffer, true);
+    const uploadedImageUrl = await uploadOnCloudinary(
+      fileBuffer,
+      "image",
+      true
+    );
 
-    await connect();
     const newJob = await Job.create({
       title,
       company,

@@ -83,7 +83,11 @@ export const PUT = async (
       }
 
       const fileBuffer = Buffer.from(await companyImg.arrayBuffer());
-      const newThumbnailUrl = await uploadOnCloudinary(fileBuffer, true);
+      const newThumbnailUrl = await uploadOnCloudinary(
+        fileBuffer,
+        "image",
+        true
+      );
 
       if (!newThumbnailUrl) {
         throw new Error("Failed to upload new image to Cloudinary");

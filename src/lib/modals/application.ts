@@ -22,7 +22,7 @@ const ApplicationSchema: Schema = new Schema(
       ref: "User",
       required: true,
     },
-    fullName: {
+    fullname: {
       type: String,
       required: true,
     },
@@ -30,7 +30,7 @@ const ApplicationSchema: Schema = new Schema(
       type: String,
       required: true,
     },
-    resumeUrl: {
+    resume: {
       type: String, // Optional field for resume file uploads
     },
     coverLetter: {
