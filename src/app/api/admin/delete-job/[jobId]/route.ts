@@ -27,7 +27,6 @@ export const DELETE = async (
       );
     }
 
-    // Successfully deleted the project
     return NextResponse.json(
       { message: "Project deleted successfully." },
       { status: 200 }

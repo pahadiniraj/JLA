@@ -3,12 +3,14 @@ import UserRefreshToken from "../../lib/modals/userRefreshToken";
 
 interface User {
   _id: string;
+  role: string;
 }
 
 export const GenerateAccessAndRefreshToken = async (user: User) => {
   try {
     const payload = {
       id: user._id,
+      role: user.role,
     };
 
     // Access Token Secret
@@ -20,6 +22,7 @@ export const GenerateAccessAndRefreshToken = async (user: User) => {
     }
 
     const accessTokenExp = Math.floor(Date.now() / 1000) + 100; // Token expiration time
+    console.log("ACCESSTOKEN", accessTokenExp);
     const accessToken = jwt.sign(
       { ...payload, exp: accessTokenExp },
       accessTokenSecret

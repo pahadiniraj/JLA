@@ -1,11 +1,25 @@
 import { connect } from "@/lib/db";
 import Job from "@/lib/modals/job";
 import { uploadOnCloudinary } from "@/utils/Cloudinary/cloudinary";
+import { AccessTokenAutoRefresh } from "@/utils/Tokens/accessTokenAutoRefresh";
+import { verifyToken } from "@/utils/Tokens/VerifyToken";
 import { jobValidationSchema } from "@/utils/Validation/JOI/createJobSchema";
 import { NextResponse } from "next/server";
 
 export const POST = async (req: Request) => {
   try {
+    const refresh = await AccessTokenAutoRefresh(req);
+
+    if (refresh) {
+      return refresh;
+    }
+
+    const result = await verifyToken(req);
+
+    if (!result.isValid) {
+      return NextResponse.json({ error: result.error }, { status: 401 });
+    }
+
     const formData = await req.formData();
 
     const title = formData.get("title")?.toString();

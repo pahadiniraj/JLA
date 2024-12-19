@@ -25,9 +25,8 @@ const Register: React.FC = () => {
                 />
               </div>
               <p className="text-center text-base ">
-                Welcome to Niraj Portfolio Sign up to stay updated with my
-                latest projects. Fill in your details and join the creative
-                journey!
+                Welcome to Job Finder! Register with a valid email to receive a
+                verification code.
               </p>
             </div>
             <FormikRegister />
