@@ -8,59 +8,51 @@ import { NextResponse } from "next/server";
 
 export const POST = async (
   req: Request,
-  { params }: { params: { jobId: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) => {
   try {
-    const { jobId } = await params;
-
-    if (!jobId) {
-      return NextResponse.json(
-        { error: "Job ID is required" },
-        { status: 400 }
-      );
-    }
-
     await connect();
 
     const refresh = await AccessTokenAutoRefresh(req);
-
     if (refresh) {
       return refresh;
     }
 
     const result = await verifyToken(req);
-
     if (!result.isValid || !result.user) {
       return NextResponse.json({ error: result.error }, { status: 401 });
     }
 
+    const jobId = (await params).id;
+
     const user = result.user;
 
     const userApplication = await User.findById(user.id);
-
     if (!userApplication) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
 
-    // Get fullName and email from the userApplication document
     const fullName = userApplication.fullname;
     const email = userApplication.email;
 
-    // Parse request data
-    const formData = await req.formData();
-    const coverLetter = formData.get("coverLetter") as File;
-    const resume = formData.get("resume") as File;
-
-    if (!coverLetter || !resume) {
+    if (!jobId) {
       return NextResponse.json(
-        {
-          error: "Cover letter and resume are required.",
-        },
+        { error: "Job ID is required." },
         { status: 400 }
       );
     }
 
-    // Upload resume to Cloudinary
+    const formData = await req.formData();
+    const coverLetter = formData.get("coverLetter") as File | null;
+    const resume = formData.get("resume") as File | null;
+
+    if (!coverLetter || !resume) {
+      return NextResponse.json(
+        { error: "Cover letter and resume are required." },
+        { status: 400 }
+      );
+    }
+
     const resumeBuffer = Buffer.from(await resume.arrayBuffer());
     const uploadedResumeUrl = await uploadOnCloudinary(
       resumeBuffer,
@@ -68,7 +60,6 @@ export const POST = async (
       false
     );
 
-    // Upload cover letter to Cloudinary
     const coverLetterBuffer = Buffer.from(await coverLetter.arrayBuffer());
     const uploadedCoverLetterUrl = await uploadOnCloudinary(
       coverLetterBuffer,
@@ -76,19 +67,18 @@ export const POST = async (
       false
     );
 
-    // Create a new application
     const newApplication = await Application.create({
-      jobId, // Using resolved jobId
+      jobId,
       userId: user.id,
       fullname: fullName,
       email,
       resume: uploadedResumeUrl,
-      coverLetter: uploadedCoverLetterUrl, // Store the cover letter URL as well
+      coverLetter: uploadedCoverLetterUrl,
     });
 
     return NextResponse.json(
       {
-        message: "Application submitted successfully",
+        message: "Application submitted successfully.",
         application: newApplication,
       },
       { status: 201 }

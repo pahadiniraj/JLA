@@ -4,18 +4,6 @@ import User from "../../../../lib/modals/user";
 import { userRegistrationSchema } from "../../../../utils/Validation/JOI/userSchema";
 import GenerateOtpAndSendMail from "../../../../utils/Email/GenerateOTP";
 
-export const GET = async () => {
-  try {
-    await connect();
-    const users = await User.find();
-    return new NextResponse(JSON.stringify(users));
-  } catch (error: any) {
-    return new NextResponse(JSON.stringify({ error: error.message }), {
-      status: 500,
-    });
-  }
-};
-
 export const POST = async (req: Request) => {
   try {
     const { fullname, email, password } = await req.json();
